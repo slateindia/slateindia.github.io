@@ -22,9 +22,12 @@ export default function Home() {
   const bounds: [number, number, number, number] | null = L ? [L.west, L.north - L.nrows * L.res, L.west + L.ncols * L.res, L.north] : null;
   return (
     <div className="space-y-4">
-      <div>
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
+        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/brand/slate-logo-1200.png`} alt="SLATE: Slope Landslide Analytics and Triggering Explorer" className="w-full max-w-[360px] h-auto" />
+        <div>
         <h1 className="text-2xl font-semibold">SLATE <span className="font-normal text-muted">· Slope Landslide Analytics and Triggering Explorer</span></h1>
         <p className="text-muted">Interactive susceptibility, rainfall-triggering thresholds and machine-learning nowcasts. An interactive research platform for landslide susceptibility and rainfall-triggering analysis.</p>
+        </div>
       </div>
       <Disclaimer strong />
       <div className="grid lg:grid-cols-[1fr,380px] gap-4">

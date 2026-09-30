@@ -1,5 +1,7 @@
 # SLATE: Slope Landslide Analytics and Triggering Explorer
 
+<p align="center"><img src="docs/slate-logo.png" alt="SLATE logo" width="480"></p>
+
 Author: Kishan Tiwari (kishantiwari@iitkgp.ac.in)
 
 An interactive research platform for landslide susceptibility and rainfall-triggering analysis, built on the paper

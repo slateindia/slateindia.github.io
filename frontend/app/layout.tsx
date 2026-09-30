@@ -21,7 +21,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="bg-paper text-ink min-h-screen">
         <nav className="bg-white border-b border-line sticky top-0 z-20">
           <div className="max-w-[1500px] mx-auto px-4 py-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-            <Link href="/" className="font-semibold text-accent mr-2" title="Slope Landslide Analytics and Triggering Explorer">SLATE</Link>
+            <Link href="/" className="flex items-center gap-2 font-semibold text-accent mr-2" title="Slope Landslide Analytics and Triggering Explorer">
+              <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/brand/slate-icon-96.png`} alt="SLATE logo" width={28} height={28} />SLATE</Link>
             {NAV.slice(1).map(([h, l]) => <Link key={h} href={h} className="text-sm text-muted hover:text-ink">{l}</Link>)}
           </div>
         </nav>
