@@ -25,9 +25,11 @@ jobs:
       - name: Build static site
         working-directory: frontend
         env:
-          # project site: https://<user>.github.io/<repository>/ ; for a <user>.github.io repository set this to ""
-          NEXT_PUBLIC_BASE_PATH: ${{ endsWith(github.event.repository.name, '.github.io') && '' || format('/{0}', github.event.repository.name) }}
+          REPO: ${{ github.event.repository.name }}
         run: |
+          # <user>.github.io repositories are served at the domain root; other repositories at /<repository>/
+          case "$REPO" in *.github.io) export NEXT_PUBLIC_BASE_PATH="" ;; *) export NEXT_PUBLIC_BASE_PATH="/$REPO" ;; esac
+          echo "base path: '$NEXT_PUBLIC_BASE_PATH'"
           npm ci
           npx next build --no-lint
           touch out/.nojekyll
