@@ -1,0 +1,1 @@
+{"id":"v0","label":"Plain GBM ensemble (V0)","column":"score_V0","n_cells":113290,"kind":"spatial cross-validation out-of-fold score (modelled cells only)","cv_metrics":{"AUC":0.9788041059866146,"AUC_lo":0.9669139753627214,"AUC_hi":0.985420034916516,"AP":0.6058747557339831,"AP_lo":0.3965300339136663,"AP_hi":0.7089849991562736}}

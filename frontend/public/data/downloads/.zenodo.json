@@ -1,0 +1,10 @@
+{
+  "title": "Data and code for: National landslide susceptibility and rainfall-triggering thresholds in India: spatial transferability, inventory bias and machine learning",
+  "upload_type": "dataset",
+  "version": "1.0",
+  "creators": [{"name": "Tiwari, Kishan"}],
+  "description": "Harmonised national landslide inventory, 0.05 degree predictor table, spatial cross-validation folds and out-of-fold scores, national PIBE susceptibility grid (GeoTIFF), frozen pre-2013 susceptibility, daily rainfall-threshold calibration and test panels, test predictions, event hindcasts, result tables, figures and the Python scripts that reproduce every result of the associated manuscript.",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "keywords": ["landslide susceptibility", "rainfall threshold", "machine learning", "inventory bias", "label leakage", "India"]
+}

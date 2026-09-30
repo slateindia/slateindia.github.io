@@ -1,0 +1,7 @@
+step,records
+Records in workbook,9642
+With valid coordinates,9627
+Inside India bounding box,9627
+After removing co-located same-year duplicates,9608
+"Susceptibility subset (rainfall-type, <=5 km)",8845
+"Threshold subset (exact day, rainfall, <=25 km, 1991-2025)",928

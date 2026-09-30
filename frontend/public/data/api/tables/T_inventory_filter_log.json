@@ -1,0 +1,1 @@
+[{"step":"Records in workbook","records":9642},{"step":"With valid coordinates","records":9627},{"step":"Inside India bounding box","records":9627},{"step":"After removing co-located same-year duplicates","records":9608},{"step":"Susceptibility subset (rainfall-type, <=5 km)","records":8845},{"step":"Threshold subset (exact day, rainfall, <=25 km, 1991-2025)","records":928}]

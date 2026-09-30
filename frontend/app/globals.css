@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+select, input { background: white; }
+.btn { @apply bg-accent text-white text-sm px-3 py-1.5 rounded hover:opacity-90 disabled:opacity-50; }
+.field { @apply border border-line rounded px-2 py-1 text-sm; }

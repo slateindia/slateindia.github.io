@@ -1,0 +1,1 @@
+{"id":"pibe_oof","label":"PIBE","column":"score_PIBE","n_cells":113290,"kind":"spatial cross-validation out-of-fold score (modelled cells only)","cv_metrics":{"AUC":0.9550933779421568,"AUC_lo":0.9301231991775598,"AUC_hi":0.9677921415357432,"AP":0.4839073819074768,"AP_lo":0.2581383896188709,"AP_hi":0.5968624656546473}}

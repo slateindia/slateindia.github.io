@@ -1,0 +1,10 @@
+/data/
+ml_build.log
+__pycache__/
+.pytest_cache/
+frontend/node_modules/
+frontend/.next/
+scripts/_build/
+scripts/_reference.json
+frontend/out/
+catboost_info/

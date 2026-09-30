@@ -1,0 +1,1216 @@
+[
+ {
+  "caption": "Table S1 Predictor metadata",
+  "header": [
+   "Variables",
+   "Units",
+   "Source",
+   "Native resolution",
+   "Aggregation",
+   "Period",
+   "Missing data",
+   "Used by"
+  ],
+  "rows": [
+   [
+    "elev_mean, relief, relief01_mean",
+    "m",
+    "Copernicus GLO-90",
+    "90 m",
+    "mean; max-min; mean of 0.01° max-min",
+    "static",
+    "voids excluded",
+    "B, P"
+   ],
+   [
+    "slope_mean, slope_std, slope_max",
+    "°",
+    "Copernicus GLO-90 (Horn)",
+    "90 m",
+    "mean; SD; max",
+    "static",
+    "voids excluded",
+    "B, P, T"
+   ],
+   [
+    "steep25, steep35",
+    "fraction",
+    "Copernicus GLO-90",
+    "90 m",
+    "share of pixels",
+    "static",
+    "none",
+    "B, P"
+   ],
+   [
+    "curv_abs, northness",
+    "m⁻¹ ×10³; -",
+    "Copernicus GLO-90",
+    "90 m",
+    "mean",
+    "static",
+    "none",
+    "B, P"
+   ],
+   [
+    "map_mm, cv_annual, jjas_frac",
+    "mm; -; fraction",
+    "IMD 0.25° daily",
+    "0.25°",
+    "1991-2025 climatology, nearest IMD cell",
+    "1991-2025",
+    "IMD land mask",
+    "B, P, SACT (MAP)"
+   ],
+   [
+    "max1d_mm, max3d_mm, rl25_1d, rl25_3d, r50_days",
+    "mm; days/yr",
+    "IMD 0.25° daily",
+    "0.25°",
+    "annual maxima mean; Gumbel 25-yr level; count",
+    "1991-2025",
+    "IMD land mask",
+    "B, P, T, ML"
+   ],
+   [
+    "sand, silt, clay, bdod, soc, cfvo",
+    "%; g cm⁻³; g kg⁻¹; %",
+    "SoilGrids 2.0",
+    "5 km aggregate",
+    "5-15 and 15-30 cm depth-weighted, area-average reprojection",
+    "static",
+    "median fill in models",
+    "B, P, T"
+   ],
+   [
+    "lc_tree ... lc_snow (7)",
+    "fraction",
+    "ESA WorldCover 2021",
+    "10 m (read at ~300 m)",
+    "class share",
+    "2021",
+    "none",
+    "B, P"
+   ],
+   [
+    "dist_fault_km, eq_density, dist_m6_km",
+    "km; weighted count",
+    "GEM faults; USGS ComCat",
+    "vector",
+    "great-circle distance; Gaussian kernel (σ = 50 km)",
+    "1970-2026",
+    "none",
+    "B, P"
+   ],
+   [
+    "lith_group, age_ma",
+    "class; Ma",
+    "GSC/Macrostrat",
+    "0.25° sample",
+    "nearest sample",
+    "static",
+    "'other' class",
+    "B, P"
+   ],
+   [
+    "fs_trigrs_p, ahp_index",
+    "probability; index",
+    "this study",
+    "0.05°",
+    "Monte Carlo; weighted rating",
+    "static",
+    "none",
+    "P"
+   ],
+   [
+    "log_pop",
+    "ln(1+persons km⁻²)",
+    "WorldPop 2020",
+    "1 km",
+    "sum then density",
+    "2020",
+    "zero",
+    "P (fixed for prediction)"
+   ],
+   [
+    "R0, R1, A3-A60, maxR3, E, D, A30",
+    "mm; days",
+    "IMD 0.25° daily",
+    "0.25°, daily",
+    "running sums, event reconstruction (wet ≥ 1 mm, G = 2)",
+    "daily",
+    "none",
+    "ML, SACT (E, D, A30)"
+   ],
+   [
+    "S",
+    "percentile 0-1",
+    "pre-2013 PIBE",
+    "0.05° → 0.25°",
+    "90th percentile within IMD cell",
+    "≤ 2012 labels",
+    "cells outside domain dropped",
+    "SACT, ML"
+   ]
+  ],
+  "footnote": "B benchmark susceptibility models (FR, LR, RF, XGBoost, LightGBM, CatBoost); P PIBE; T TRIGRS; ML daily nowcasts.",
+  "widths": [
+   34,
+   18,
+   22,
+   17,
+   30,
+   14,
+   18,
+   17
+  ]
+ },
+ {
+  "caption": "Table S2 Model hyperparameters (fixed a priori; no tuning on test data)",
+  "header": [
+   "Model",
+   "Susceptibility (0.05°)",
+   "Daily nowcast (cell-day)"
+  ],
+  "rows": [
+   [
+    "LR",
+    "L2, C = 0.5, standardised, balanced class weights",
+    "L2, C = 0.5, standardised; negatives undersampled 20:1"
+   ],
+   [
+    "RF",
+    "500 trees, min leaf 5, max features √p, balanced subsample weights",
+    "500 trees, min leaf 5, max features √p; undersampled 20:1"
+   ],
+   [
+    "XGBoost",
+    "600 trees, learning rate 0.03, depth 5, subsample 0.8, colsample 0.7, min child weight 5, λ = 2, scale_pos_weight = neg/pos",
+    "400 trees, learning rate 0.03, depth 3, subsample 0.8, colsample 0.8, min child weight 5"
+   ],
+   [
+    "LightGBM",
+    "600 trees, learning rate 0.03, 31 leaves, min child samples 30, subsample 0.8, colsample 0.7, λ = 2, scale_pos_weight = neg/pos",
+    "400 trees, learning rate 0.03, 7 leaves, min child samples 20, subsample 0.8, colsample 0.8"
+   ],
+   [
+    "CatBoost",
+    "800 iterations, learning rate 0.05, depth 6, L2 = 5, scale_pos_weight = neg/pos",
+    "500 iterations, learning rate 0.05, depth 4"
+   ],
+   [
+    "PIBE / PI-GBM",
+    "Mean of the three GBMs; source weights (Eq. 5); monotone increasing in slope, relief, rainfall extremes, TRIGRS and AHP features",
+    "Mean of the three GBMs with TRIGRS FS added"
+   ],
+   [
+    "SACT",
+    "-",
+    "Logistic regression, L2, C = 10, on event days (D ≥ 1)"
+   ],
+   [
+    "Random seed",
+    "42",
+    "42"
+   ]
+  ],
+  "widths": [
+   22,
+   80,
+   68
+  ]
+ },
+ {
+  "caption": "Table S3 Conversion of thresholds to the daily evaluation frame",
+  "header": [
+   "Threshold",
+   "Original form",
+   "Evaluated as",
+   "Event definition",
+   "Calibration status"
+  ],
+  "rows": [
+   [
+    "Caine (1980)",
+    "I = 14.82 D^-0.39 (mm/h, h)",
+    "E_t/(24 D_t) ≥ a (24 D_t)^b",
+    "running IMD event, wet ≥ 1 mm, G = 2",
+    "published, unchanged"
+   ],
+   [
+    "Guzzetti et al. (2008)",
+    "I = 2.2 D^-0.44 (mm/h, h)",
+    "E_t/(24 D_t) ≥ a (24 D_t)^b",
+    "running IMD event, wet ≥ 1 mm, G = 2",
+    "published, unchanged"
+   ],
+   [
+    "Dahal and Hasegawa (2008)",
+    "I = 73.9 D^-0.79 (mm/h, h)",
+    "E_t/(24 D_t) ≥ a (24 D_t)^b",
+    "running IMD event, wet ≥ 1 mm, G = 2",
+    "published, unchanged"
+   ],
+   [
+    "Kanungo and Sharma (2014)",
+    "I = 1.82 D^-0.23 (mm/h, h)",
+    "E_t/(24 D_t) ≥ a (24 D_t)^b",
+    "running IMD event, wet ≥ 1 mm, G = 2",
+    "published, unchanged"
+   ],
+   [
+    "Mathew et al. (2014)",
+    "I = 58.7 D^-1.12 (mm/h, h)",
+    "E_t/(24 D_t) ≥ a (24 D_t)^b",
+    "running IMD event, wet ≥ 1 mm, G = 2",
+    "published, unchanged"
+   ],
+   [
+    "Frequentist E-D (T5)",
+    "E = α D^β",
+    "E_t ≥ α D_t^β",
+    "G = 2",
+    "fitted 2007-2012, 5 % exceedance"
+   ],
+   [
+    "MaCumBA-type I-D",
+    "I = α D^β (mm/day)",
+    "E_t/D_t ≥ α D_t^β",
+    "G optimised (1-5), selected 1",
+    "slope from regression, intercept by TSS 2007-2012"
+   ],
+   [
+    "TRIGRS",
+    "FS(Z, t)",
+    "FS_t < 1 (or calibrated cut)",
+    "daily rainfall, 30-day memory",
+    "uncalibrated / FS cut by TSS"
+   ],
+   [
+    "SACT",
+    "Eq. (8)",
+    "p_t ≥ p*",
+    "G = 2",
+    "logistic 2007-2012, p* by TSS"
+   ]
+  ],
+  "widths": [
+   36,
+   30,
+   36,
+   34,
+   34
+  ]
+ },
+ {
+  "caption": "Table S4 AHP pairwise comparison matrix (λmax = 8.11, CR = 0.012) and weights",
+  "header": [
+   "Factor",
+   "Slope",
+   "Rain",
+   "Relief",
+   "Lith.",
+   "Cover",
+   "Fault",
+   "Clay",
+   "Seism.",
+   "Weight"
+  ],
+  "rows": [
+   [
+    "Slope",
+    "1",
+    "2",
+    "3",
+    "3",
+    "4",
+    "5",
+    "5",
+    "6",
+    "0.315"
+   ],
+   [
+    "Extreme rainfall",
+    "1/2",
+    "1",
+    "2",
+    "2",
+    "3",
+    "4",
+    "4",
+    "5",
+    "0.212"
+   ],
+   [
+    "Relief",
+    "1/3",
+    "1/2",
+    "1",
+    "1",
+    "2",
+    "3",
+    "3",
+    "4",
+    "0.134"
+   ],
+   [
+    "Lithology",
+    "1/3",
+    "1/2",
+    "1",
+    "1",
+    "2",
+    "2",
+    "3",
+    "3",
+    "0.122"
+   ],
+   [
+    "Land cover",
+    "1/4",
+    "1/3",
+    "1/2",
+    "1/2",
+    "1",
+    "1",
+    "2",
+    "2",
+    "0.072"
+   ],
+   [
+    "Fault distance",
+    "1/5",
+    "1/4",
+    "1/3",
+    "1/2",
+    "1",
+    "1",
+    "1",
+    "2",
+    "0.059"
+   ],
+   [
+    "Clay content",
+    "1/5",
+    "1/4",
+    "1/3",
+    "1/3",
+    "1/2",
+    "1",
+    "1",
+    "1",
+    "0.047"
+   ],
+   [
+    "Seismicity",
+    "1/6",
+    "1/5",
+    "1/4",
+    "1/3",
+    "1/2",
+    "1/2",
+    "1",
+    "1",
+    "0.040"
+   ]
+  ]
+ },
+ {
+  "caption": "Table S5 AHP rating rules (rating 1 = lowest, 5 = highest susceptibility)",
+  "header": [
+   "Factor",
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "rows": [
+   [
+    "Mean slope (°)",
+    "< 5",
+    "5-12",
+    "12-20",
+    "20-28",
+    "≥ 28"
+   ],
+   [
+    "25-year 3-day rainfall (mm)",
+    "< 150",
+    "150-250",
+    "250-350",
+    "350-500",
+    "≥ 500"
+   ],
+   [
+    "Relief (m)",
+    "< 100",
+    "100-300",
+    "300-700",
+    "700-1,500",
+    "≥ 1,500"
+   ],
+   [
+    "Lithology",
+    "-",
+    "intrusive",
+    "volcanic, volcano-sedimentary, Cenozoic sedimentary, other",
+    "older sedimentary",
+    "metamorphic"
+   ],
+   [
+    "Land-cover index: bare + grass + shrub + 0.5 built-up (fraction)",
+    "< 0.10",
+    "0.10-0.25",
+    "0.25-0.45",
+    "0.45-0.65",
+    "≥ 0.65"
+   ],
+   [
+    "Distance to active fault (km)",
+    "≥ 60",
+    "30-60",
+    "15-30",
+    "5-15",
+    "< 5"
+   ],
+   [
+    "Clay content (%)",
+    "< 15",
+    "15-22",
+    "22-30",
+    "30-38",
+    "≥ 38"
+   ],
+   [
+    "Epicentre density (weighted)",
+    "< 0.44",
+    "0.44-4.39",
+    "4.39-35.37",
+    "35.37-76.4",
+    "≥ 76.4"
+   ]
+  ],
+  "footnote": "Intervals are closed on the left. Epicentre-density breaks are the 50th, 75th, 90th and 97th national percentiles.",
+  "widths": [
+   50,
+   20,
+   22,
+   36,
+   22,
+   20
+  ]
+ },
+ {
+  "caption": "Table S6 Sensitivity of susceptibility skill to the background buffer around recorded-positive cells",
+  "header": [
+   "Buffer (cells)",
+   "Recorded-positive cells",
+   "Background cells",
+   "RF AUC",
+   "RF AP",
+   "PIBE AUC",
+   "PIBE AP"
+  ],
+  "rows": [
+   [
+    0,
+    765,
+    "114,936",
+    "0.973",
+    "0.443",
+    "0.943",
+    "0.353"
+   ],
+   [
+    1,
+    765,
+    "112,525",
+    "0.978",
+    "0.590",
+    "0.952",
+    "0.489"
+   ],
+   [
+    2,
+    765,
+    "109,486",
+    "0.983",
+    "0.653",
+    "0.960",
+    "0.542"
+   ]
+  ]
+ },
+ {
+  "caption": "Table S7 SACT sensitivity (test 2013-2025) to event definition, susceptibility aggregation, antecedent window and components",
+  "header": [
+   "Factor",
+   "Value",
+   "TSS",
+   "AUC",
+   "POD at 5 % budget",
+   "Alert rate (%)"
+  ],
+  "rows": [
+   [
+    "no-rain gap G (days)",
+    "1",
+    "0.553",
+    "0.821",
+    "0.281",
+    "21.4"
+   ],
+   [
+    "no-rain gap G (days)",
+    "2",
+    "0.580",
+    "0.832",
+    "0.164",
+    "28.2"
+   ],
+   [
+    "no-rain gap G (days)",
+    "3",
+    "0.556",
+    "0.821",
+    "0.149",
+    "33.8"
+   ],
+   [
+    "no-rain gap G (days)",
+    "4",
+    "0.560",
+    "0.813",
+    "0.146",
+    "35.0"
+   ],
+   [
+    "no-rain gap G (days)",
+    "5",
+    "0.536",
+    "0.801",
+    "0.122",
+    "32.9"
+   ],
+   [
+    "susceptibility percentile in IMD cell",
+    "50th",
+    "0.595",
+    "0.855",
+    "0.318",
+    "24.6"
+   ],
+   [
+    "susceptibility percentile in IMD cell",
+    "75th",
+    "0.585",
+    "0.850",
+    "0.300",
+    "29.4"
+   ],
+   [
+    "susceptibility percentile in IMD cell",
+    "90th",
+    "0.580",
+    "0.832",
+    "0.164",
+    "28.2"
+   ],
+   [
+    "susceptibility percentile in IMD cell",
+    "max",
+    "0.580",
+    "0.837",
+    "0.204",
+    "29.6"
+   ],
+   [
+    "antecedent window (days)",
+    "15",
+    "0.597",
+    "0.836",
+    "0.207",
+    "25.8"
+   ],
+   [
+    "antecedent window (days)",
+    "30",
+    "0.580",
+    "0.832",
+    "0.164",
+    "28.2"
+   ],
+   [
+    "antecedent window (days)",
+    "60",
+    "0.592",
+    "0.832",
+    "0.207",
+    "27.3"
+   ],
+   [
+    "Component ablation",
+    "E, D",
+    "0.598",
+    "0.842",
+    "0.241",
+    "24.4"
+   ],
+   [
+    "Component ablation",
+    "E, D, MAP",
+    "0.591",
+    "0.849",
+    "0.300",
+    "26.9"
+   ],
+   [
+    "Component ablation",
+    "E, D, A30",
+    "0.582",
+    "0.842",
+    "0.233",
+    "28.6"
+   ],
+   [
+    "Component ablation",
+    "E, D, MAP, A30",
+    "0.590",
+    "0.852",
+    "0.294",
+    "27.6"
+   ],
+   [
+    "Component ablation",
+    "E, D, MAP, A30, S (SACT)",
+    "0.580",
+    "0.832",
+    "0.164",
+    "28.2"
+   ]
+  ],
+  "footnote": "Base configuration: G = 2 days, 90th percentile, 30-day window. SACT coefficients (95 % cell-block bootstrap interval): b_S = -3.82 (-3.96 to 4.30), b_A = 0.44 (0.13 to 0.59), b_MAP = -0.15 (-1.34 to 0.07); McFadden pseudo-R² = 0.011; calibration slope 0.94, intercept -0.14; test Brier score 0.00077 (climatology 0.00077).",
+  "widths": [
+   52,
+   22,
+   20,
+   20,
+   26,
+   22
+  ]
+ },
+ {
+  "caption": "Table S8 Test-period composition, regional threshold skill and exploratory nested blend",
+  "header": [
+   "Group",
+   "Item",
+   "Positive cell-days",
+   "Details"
+  ],
+  "rows": [
+   [
+    "Period/source",
+    "2013-2016, Mizoram event dataset",
+    1,
+    "1 cells, 1 dates"
+   ],
+   [
+    "Period/source",
+    "2013-2016, NASA GLC",
+    375,
+    "215 cells, 229 dates"
+   ],
+   [
+    "Period/source",
+    "2017-2025, Mizoram event dataset",
+    1,
+    "1 cells, 1 dates"
+   ],
+   [
+    "Region",
+    "NE India",
+    122,
+    "TSS 0.488 / 0.636 / 0.549"
+   ],
+   [
+    "Region",
+    "NW Himalaya",
+    173,
+    "TSS 0.578 / 0.637 / 0.620"
+   ],
+   [
+    "Region",
+    "Rest of India",
+    25,
+    "TSS 0.547 / 0.407 / 0.549"
+   ],
+   [
+    "Region",
+    "Western Ghats",
+    57,
+    "TSS 0.554 / 0.575 / 0.587"
+   ],
+   [
+    "Exploratory nested blend",
+    "susceptibility (V2, PIBE, FR)",
+    "",
+    "CV AUC 0.970; mean transfer AUC 0.775"
+   ]
+  ],
+  "footnote": "Regional TSS order: frequentist E-D / PI-GBM / SACT.",
+  "widths": [
+   40,
+   50,
+   25,
+   55
+  ]
+ },
+ {
+  "caption": "Table S9 Temporal reference of predictor layers relative to the pre-2013 susceptibility experiment",
+  "header": [
+   "Predictor layer",
+   "Dataset period",
+   "Post-2012 information?",
+   "Role"
+  ],
+  "rows": [
+   [
+    "Terrain (GLO-90 DEM)",
+    "2011-2015 acquisition; treated as static",
+    "Negligible (terrain quasi-static)",
+    "Susceptibility"
+   ],
+   [
+    "Rainfall climatology (IMD)",
+    "1991-2025",
+    "Yes (climatological)",
+    "Susceptibility; SACT (MAP)"
+   ],
+   [
+    "Soil (SoilGrids 2.0)",
+    "Current state (legacy profiles)",
+    "Treated as static",
+    "Susceptibility; TRIGRS"
+   ],
+   [
+    "Land cover (WorldCover)",
+    "2021",
+    "Yes",
+    "Susceptibility; built-up as reporting covariate"
+   ],
+   [
+    "Population (WorldPop)",
+    "2020",
+    "Yes",
+    "Reporting covariate (PIBE); exposure"
+   ],
+   [
+    "Earthquakes (USGS ComCat)",
+    "1970-2026",
+    "Yes (includes post-2012 events)",
+    "Susceptibility (tectonic)"
+   ],
+   [
+    "Active faults (GEM)",
+    "Compilation to 2019",
+    "Treated as static",
+    "Susceptibility (tectonic)"
+   ],
+   [
+    "Lithology (GSC/Macrostrat)",
+    "Static map",
+    "No",
+    "Susceptibility"
+   ],
+   [
+    "Landslide labels",
+    "Records dated ≤ 2012",
+    "No",
+    "Training of frozen S"
+   ],
+   [
+    "Daily rainfall (IMD)",
+    "Day t and earlier only",
+    "No (causal)",
+    "Thresholds and nowcasts"
+   ]
+  ],
+  "footnote": "The pre-2013 experiment controls leakage of future landslide labels into S; it is not a historical reconstruction of the predictor stack, several layers of which represent current conditions.",
+  "widths": [
+   42,
+   42,
+   40,
+   46
+  ]
+ },
+ {
+  "caption": "Table S10 Purpose, training data and main strengths and limitations of the models compared",
+  "header": [
+   "Model",
+   "Purpose",
+   "Training labels",
+   "Main strength",
+   "Main limitation"
+  ],
+  "rows": [
+   [
+    "AHP",
+    "Knowledge-driven susceptibility",
+    "None",
+    "Interpretable, no labels needed",
+    "Low precision; poor transfer to NW Himalaya"
+   ],
+   [
+    "FR",
+    "Statistical susceptibility",
+    "Inventory (training folds)",
+    "Best transfer to Western Ghats",
+    "No interactions; lower AP"
+   ],
+   [
+    "Monte Carlo TRIGRS",
+    "Physically based susceptibility",
+    "None",
+    "Process basis",
+    "Assumed national parameters"
+   ],
+   [
+    "LR, RF, XGBoost, LightGBM, CatBoost",
+    "Predictive susceptibility",
+    "Inventory (training folds)",
+    "Highest discrimination",
+    "Reporting bias; variable transfer"
+   ],
+   [
+    "PIBE",
+    "Bias-adjusted susceptibility map",
+    "Inventory (training folds)",
+    "Robust ranking; no flat terrain in top 10 %",
+    "Lower agreement with catalogue labels"
+   ],
+   [
+    "Published I-D thresholds",
+    "Triggering",
+    "None (applied unchanged)",
+    "Simple",
+    "Poor national transfer"
+   ],
+   [
+    "Frequentist E-D, MaCumBA-type",
+    "Triggering",
+    "2007-2012",
+    "Objective, interpretable",
+    "Degenerate with daily events"
+   ],
+   [
+    "Daily TRIGRS",
+    "Triggering",
+    "None / FS cut 2007-2012",
+    "Process basis",
+    "Weakest skill"
+   ],
+   [
+    "SACT",
+    "Event-conditional test of climate, antecedent and susceptibility conditioning",
+    "2007-2012",
+    "Interpretable closed form",
+    "S adds no skill without leakage"
+   ],
+   [
+    "ML nowcasts, PI-GBM",
+    "Triggering",
+    "2007-2012",
+    "Highest detection at 5 % budget",
+    "Less transparent; no spatial skill in Kerala 2018"
+   ]
+  ],
+  "widths": [
+   36,
+   38,
+   30,
+   36,
+   40
+  ]
+ },
+ {
+  "caption": "Table S11 TRIGRS parameterisation used in the Monte Carlo susceptibility model and the daily threshold model",
+  "header": [
+   "Parameter",
+   "Base value or function",
+   "Basis",
+   "Monte Carlo range"
+  ],
+  "rows": [
+   [
+    "Saturated conductivity Ks",
+    "Cosby et al. (1984) PTF from SoilGrids sand and clay",
+    "Published pedotransfer function",
+    "Ks × 10^±0.5"
+   ],
+   [
+    "Hydraulic diffusivity D0",
+    "100 Ks (m² s⁻¹)",
+    "Order of magnitude within reported TRIGRS applications (e.g. Salciarini et al. 2006; Raia et al. 2014); assumption",
+    "Varies with Ks"
+   ],
+   [
+    "Effective cohesion c'",
+    "2 kPa (sand-dominated) to 12 kPa (clay 50 %)",
+    "Typical of shallow residual and colluvial soils; assumption",
+    "× 0.5 to 1.5"
+   ],
+   [
+    "Friction angle φ'",
+    "35° (sand-dominated) to 22° (clay 50 %)",
+    "Typical texture-dependent range; assumption",
+    "± 4°"
+   ],
+   [
+    "Soil thickness Z",
+    "3.0 m at slopes ≤ 10° to 0.8 m at slopes ≥ 45°",
+    "Thinning of regolith with slope; assumption",
+    "× 0.6 to 1.4"
+   ],
+   [
+    "Unit weight γs",
+    "20 kN m⁻³",
+    "Typical moist soil; assumption",
+    "Fixed"
+   ],
+   [
+    "Initial water table",
+    "At the soil base; long-term flux neglected",
+    "Conservative TRIGRS initial condition",
+    "Fixed"
+   ],
+   [
+    "Representative slope",
+    "Mean + 1.28 SD of 90 m slope (≈ 90th percentile), capped at the maximum",
+    "Failure-prone steep fraction of the cell",
+    "Fixed"
+   ],
+   [
+    "Design storm (susceptibility)",
+    "25-year 3-day rainfall after 27 days of mean June-September rainfall",
+    "Wet-season antecedent state plus a rare storm",
+    "Fixed"
+   ],
+   [
+    "Response memory (daily model)",
+    "30 days",
+    "Truncation of the infinite-depth response",
+    "Fixed"
+   ]
+  ],
+  "footnote": "None of these parameters was calibrated against landslide data; the ranges represent regional uncertainty in the absence of measured geotechnical and hydraulic properties.",
+  "widths": [
+   34,
+   50,
+   58,
+   28
+  ]
+ },
+ {
+  "caption": "Table S12 Rainfall threshold equations compared in this study",
+  "header": [
+   "Threshold",
+   "Equation",
+   "Units and notes"
+  ],
+  "rows": [
+   [
+    "Caine (1980), global",
+    "I = 14.82 D^-0.39",
+    "I (mm/h), D (h)"
+   ],
+   [
+    "Guzzetti et al. (2008), global",
+    "I = 2.20 D^-0.44",
+    "I (mm/h), D (h)"
+   ],
+   [
+    "Dahal and Hasegawa (2008), Nepal Himalaya",
+    "I = 73.90 D^-0.79",
+    "I (mm/h), D (h)"
+   ],
+   [
+    "Kanungo and Sharma (2014), Garhwal",
+    "I = 1.82 D^-0.23",
+    "I (mm/h), D (h)"
+   ],
+   [
+    "Mathew et al. (2014), Garhwal",
+    "I = 58.7 D^-1.12",
+    "I (mm/h), D (h)"
+   ],
+   [
+    "Frequentist E-D, T5 (this study)",
+    "E = 2.5 D^1.15",
+    "E (mm), D (days); α 1.8-3.7, β 1.09-1.22"
+   ],
+   [
+    "MaCumBA-type I-D (this study, G = 1 d)",
+    "I = 4.35 D^0.19",
+    "I (mm/day), D (days)"
+   ],
+   [
+    "SACT (this study)",
+    "E*/E0 = 0.0126 (D/D0)^0.44 (1 + A30/A0)^-0.90 (MAP/M0)^0.31 exp(7.87 S)",
+    "E0 = 1 mm, D0 = 1 day, A0 = 100 mm, M0 = 1,000 mm; p* = 0.00066; coefficient of S not different from zero (Table S7)"
+   ]
+  ],
+  "footnote": "Published thresholds were applied unchanged; α and β ranges are bootstrap 95 % intervals. Conversions to daily E-D space are listed in Supplementary Table S3.",
+  "widths": [
+   50,
+   70,
+   50
+  ]
+ },
+ {
+  "caption": "Table S13 Logistic coefficients of the base SACT model and exponents of the closed-form threshold (Eq. 8)",
+  "header": [
+   "Term",
+   "Coefficient",
+   "95 % interval",
+   "Threshold parameter",
+   "Value",
+   "95 % interval"
+  ],
+  "rows": [
+   [
+    "Intercept b_0",
+    "-5.197",
+    "-",
+    "-",
+    "-",
+    "-"
+   ],
+   [
+    "ln(E/E_0): b_E",
+    "0.486",
+    "0.347 to 1.167",
+    "ln α",
+    "-4.371",
+    "-"
+   ],
+   [
+    "ln(D/D_0): b_D",
+    "-0.214",
+    "-0.900 to 0.007",
+    "beta D",
+    "0.441",
+    "-0.02 to 0.85"
+   ],
+   [
+    "ln(1 + A_30/A_0): b_A",
+    "0.437",
+    "0.126 to 0.594",
+    "gamma A",
+    "-0.900",
+    "-1.41 to -0.13"
+   ],
+   [
+    "ln(MAP/M_0): b_MAP",
+    "-0.152",
+    "-1.337 to 0.070",
+    "delta MAP",
+    "0.313",
+    "-0.15 to 1.45"
+   ],
+   [
+    "S: b_S",
+    "-3.823",
+    "-3.958 to 4.303",
+    "eps S",
+    "7.866",
+    "-5.08 to 10.91"
+   ]
+  ],
+  "footnote": "Fitted on 309,922 calibration event days (2007-2012), L2-penalised logistic regression (C = 10). Intervals from a cell-block bootstrap. Threshold parameters: ln α = (logit p* − b_0)/b_E with p* = 0.00066; exponents are −b/b_E. Intervals of the exponents are wide because b_E is small; the S exponent is unstable because its coefficient spans zero.",
+  "widths": [
+   40,
+   22,
+   30,
+   30,
+   20,
+   28
+  ]
+ },
+ {
+  "caption": "Table S14 Test-period skill on all monitored cell-days and on rainfall-event cell-days only",
+  "header": [
+   "Method",
+   "AUC, all cell-days",
+   "AUC, event cell-days",
+   "TSS, all cell-days",
+   "TSS, event cell-days"
+  ],
+  "rows": [
+   [
+    "Frequentist E-D (T5)",
+    "0.826",
+    "0.685",
+    "0.542",
+    "0.123"
+   ],
+   [
+    "SACT",
+    "0.832",
+    "0.700",
+    "0.580",
+    "0.263"
+   ],
+   [
+    "LR",
+    "0.878",
+    "0.803",
+    "0.595",
+    "0.386"
+   ],
+   [
+    "RF",
+    "0.882",
+    "0.797",
+    "0.600",
+    "0.404"
+   ],
+   [
+    "XGBoost",
+    "0.889",
+    "0.809",
+    "0.602",
+    "0.422"
+   ],
+   [
+    "LightGBM",
+    "0.885",
+    "0.806",
+    "0.600",
+    "0.404"
+   ],
+   [
+    "CatBoost",
+    "0.886",
+    "0.802",
+    "0.614",
+    "0.381"
+   ],
+   [
+    "PI-GBM (proposed)",
+    "0.889",
+    "0.811",
+    "0.618",
+    "0.392"
+   ]
+  ],
+  "footnote": "Event cell-days (D ≥ 1, G = 2) are 42.6 % of the 487,974 test cell-days and contain 351 of the 377 landslide days; the other 26 fell on non-event days and can never be alerted by an event-based threshold. TSS at each method's calibrated operating point; frequentist score = ln E − β ln D. The MaCumBA-type threshold uses a different event definition (G = 1) and is omitted.",
+  "widths": [
+   45,
+   30,
+   30,
+   30,
+   30
+  ]
+ }
+]

@@ -1,0 +1,6 @@
+quantity,SACT_fullperiod_S,SACT_frozen_S,PIGBM_fullperiod_S,PIGBM_frozen_S
+Test TSS,0.599,0.580,0.625,0.618
+Test AUC,0.854,0.832,0.888,0.889
+Test POD at 5 % budget,0.337,0.164,0.459,0.454
+Kerala 2018 hindcast AUC (5 % budget),0.911,0.296,0.640,0.580
+Himachal 2023 hindcast AUC (5 % budget),0.935,0.459,0.983,0.933

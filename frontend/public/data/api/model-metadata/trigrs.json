@@ -1,0 +1,1 @@
+{"id":"trigrs","label":"TRIGRS Monte Carlo","column":"score_TRIGRS-MC","n_cells":113290,"kind":"spatial cross-validation out-of-fold score (modelled cells only)","cv_metrics":{"AUC":0.8618591249874756,"AUC_lo":0.8381476971464428,"AUC_hi":0.8839229767180633,"AP":0.0228592983209022,"AP_lo":0.015219172564931,"AP_hi":0.0326330172955208}}

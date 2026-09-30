@@ -1,0 +1,10 @@
+{
+  "title": "SLATE: Slope Landslide Analytics and Triggering Explorer",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "creators": [{"name": "Tiwari, Kishan"}],
+  "description": "SLATE is an interactive research platform for landslide susceptibility and rainfall-triggering analysis in India. It reproduces the models of the manuscript 'National landslide susceptibility and rainfall-triggering thresholds in India' in the browser (rainfall events, thresholds, SACT, TRIGRS factor of safety, ML nowcasts, two-tier research priority) from the archived IMD 0.25 degree daily rainfall 1991-2025. Research model output. Not an official landslide warning.",
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": ["landslide susceptibility", "rainfall threshold", "machine learning", "India", "GitHub Pages"]
+}

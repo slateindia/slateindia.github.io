@@ -1,0 +1,12 @@
+# Build the data first: python scripts/build_artifacts.py  (needs the analysis outputs)
+services:
+  backend:
+    build: { context: ., dockerfile: docker/backend.Dockerfile }
+    ports: ["8000:8000"]
+    volumes:
+      - ./data:/data:ro
+      - ../Zenodo_Deposit:/downloads:ro
+  frontend:
+    build: { context: ., dockerfile: docker/frontend.Dockerfile, args: { NEXT_PUBLIC_API: "http://localhost:8000" } }
+    ports: ["3000:3000"]
+    depends_on: [backend]

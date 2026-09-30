@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use these data or code, please cite them as below."
+title: "Data and code for: National landslide susceptibility and rainfall-triggering thresholds in India: spatial transferability, inventory bias and machine learning"
+version: "1.0"
+date-released: 2026-09-30
+license: [CC-BY-4.0, MIT]
+authors:
+  - family-names: Tiwari
+    given-names: Kishan
+    email: kishantiwari@iitkgp.ac.in
+keywords: [landslide susceptibility, rainfall threshold, machine learning, inventory bias, India]
