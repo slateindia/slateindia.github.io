@@ -1,0 +1,1 @@
+{"id":"fr","label":"Frequency ratio","column":"score_FR","n_cells":113290,"kind":"spatial cross-validation out-of-fold score (modelled cells only)","cv_metrics":{"AUC":0.9461738727632056,"AUC_lo":0.9203974022409316,"AUC_hi":0.9622193770236044,"AP":0.3205144540368797,"AP_lo":0.1296386781063279,"AP_hi":0.4379398735712667}}

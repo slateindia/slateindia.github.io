@@ -1,0 +1,649 @@
+{
+"title": "SLATE User Manual",
+"blocks": [
+{
+"t": "p",
+"text": "Slope Landslide Analytics and Triggering Explorer, version 1.0.0. Author: Kishan Tiwari (kishantiwari@iitkgp.ac.in)."
+},
+{
+"t": "note",
+"text": "Research model output. Not an official landslide warning. SLATE is a research platform. Its maps, thresholds and nowcasts are model outputs for research, teaching and evaluation, not warnings issued by any authority."
+},
+{
+"t": "h2",
+"text": "1. What SLATE is",
+"id": "1-what-slate-is"
+},
+{
+"t": "p",
+"text": "SLATE is an interactive research platform for landslide susceptibility and rainfall-triggering analysis in India. It reproduces the models of the study *National landslide susceptibility and rainfall-triggering thresholds in India: spatial transferability, inventory bias and machine learning* and lets you apply them to any rainfall cell and any day between 1 January 1991 and 31 December 2025."
+},
+{
+"t": "p",
+"text": "SLATE answers three kinds of question:"
+},
+{
+"t": "ul",
+"items": [
+"**Where** are slopes predisposed to fail? This is landslide susceptibility, mapped on a 0.05° grid (about 5.5 km).",
+"**When** is rainfall comparable to conditions that triggered landslides in the past? This is answered by rainfall thresholds and machine-learning nowcasts on the 0.25° daily rainfall grid of the India Meteorological Department (IMD).",
+"**How well** do the models perform, where do they fail, and why? Validation, uncertainty, sensitivity and a leakage audit are shown alongside every product."
+]
+},
+{
+"t": "p",
+"text": "Every number in SLATE is computed from the study's archived data and calibrated models. All computation runs in your web browser, so no server processes your queries. The browser engine was verified against the study's Python code: event rainfall, event duration, antecedent rainfall, the TRIGRS factor of safety and every threshold decision are identical, and machine-learning scores agree to within 1e-6 with no change in any alert."
+},
+{
+"t": "h2",
+"text": "2. Getting started",
+"id": "2-getting-started"
+},
+{
+"t": "h3",
+"text": "2.1 Opening SLATE",
+"id": "2-1-opening-slate"
+},
+{
+"t": "p",
+"text": "SLATE runs in any current desktop or mobile browser (Chrome, Edge, Firefox, Safari). No installation or login is needed. The first computed map of a session downloads a few megabytes of rainfall and model files; later maps reuse the cached files and appear within a second or two."
+},
+{
+"t": "h3",
+"text": "2.2 Layout",
+"id": "2-2-layout"
+},
+{
+"t": "p",
+"text": "Every page has the same structure:"
+},
+{
+"t": "ul",
+"items": [
+"**Navigation bar** (top): links to all pages. The SLATE logo returns to the dashboard.",
+"**Controls** (above the map): date, model, method and display options.",
+"**Map** (left or centre): click a cell to inspect it. The basemap selector switches between a grey OpenStreetMap background and no background; state boundaries can be turned on or off. Use the + and − buttons or the mouse wheel to zoom.",
+"**Analysis panel** (right, or below on phones): values for the selected cell, model information and caveats.",
+"**Disclaimer**: every page that shows model output repeats that it is research model output and not an official warning."
+]
+},
+{
+"t": "h3",
+"text": "2.3 Dates",
+"id": "2-3-dates"
+},
+{
+"t": "p",
+"text": "Date fields accept any day in the archived IMD record (1991-01-01 to 2025-12-31). SLATE never substitutes another date: if a date is outside the record, it says so. Two notes appear automatically when relevant:"
+},
+{
+"t": "ul",
+"items": [
+"Dates in **2007-2012** lie in the calibration period, so threshold and machine-learning outputs for them are in-sample.",
+"Dates **after 2016** lie after the end of the main dated landslide catalogue, so no catalogue evaluation exists for them."
+]
+},
+{
+"t": "h3",
+"text": "2.4 Terms used in the interface",
+"id": "2-4-terms-used-in-the-interface"
+},
+{
+"t": "p",
+"text": "Hover over dotted-underlined terms to see their definitions."
+},
+{
+"t": "table",
+"header": [
+"Term",
+"Meaning"
+],
+"rows": [
+[
+"E",
+"Event rainfall: rainfall accumulated from the start of the ongoing rainfall event to the selected day (mm)."
+],
+[
+"D",
+"Event duration: days since the event started (0 when no event is ongoing)."
+],
+[
+"A30",
+"Antecedent rainfall: rainfall in the 30 days before the event started (mm)."
+],
+[
+"MAP",
+"Mean annual precipitation, IMD 1991-2025 climatology (mm)."
+],
+[
+"S",
+"Frozen pre-2013 susceptibility percentile of the rainfall cell (0 to 1)."
+],
+[
+"TSS",
+"True skill statistic: probability of detection minus probability of false detection."
+],
+[
+"POD at 5 % budget",
+"Share of landslide days detected when about 5 % of calibration cell-days are on alert. It is a ranking rule, not a 5 % probability."
+],
+[
+"Model score",
+"Output of a machine-learning nowcast. Not a calibrated probability."
+]
+]
+},
+{
+"t": "h2",
+"text": "3. Pages and how to use them",
+"id": "3-pages-and-how-to-use-them"
+},
+{
+"t": "h3",
+"text": "3.1 Dashboard",
+"id": "3-1-dashboard"
+},
+{
+"t": "p",
+"text": "The dashboard shows the national PIBE susceptibility map, links to the main tools and a short summary of the study. Use it as a starting point. **Analyze a location** opens the flagship workflow."
+},
+{
+"t": "h3",
+"text": "3.2 Analyze a location (flagship workflow)",
+"id": "3-2-analyze-a-location-flagship-workflow"
+},
+{
+"t": "p",
+"text": "This page produces a full report for one place and one day."
+},
+{
+"t": "ol",
+"items": [
+"Click the map, or type a latitude and longitude.",
+"Choose a date.",
+"Choose the Tier 1 threshold (frequentist E-D, MaCumBA-type or SACT) and the nowcast model (PI-GBM by default).",
+"Press **ANALYZE**."
+]
+},
+{
+"t": "p",
+"text": "The report contains:"
+},
+{
+"t": "ul",
+"items": [
+"**Location**: state, coordinates and the IMD rainfall cell used.",
+"**Susceptibility**: PIBE class, continuous score and national percentile of the 0.05° cell.",
+"**Rainfall**: daily rainfall, previous-day rainfall, E, D, A30, MAP and S.",
+"**Threshold analysis**: whether each threshold is exceeded on that day.",
+"**ML nowcast**: the model score, whether it is above the model's operating cut and the 5 % budget cut, and its percentile among all cells that day.",
+"**Two-tier research result**: the research priority category (Section 3.6).",
+"**Why does this cell have this result?** A scientific decomposition (Section 3.3).",
+"**Model information and limitations** relevant to the result."
+]
+},
+{
+"t": "p",
+"text": "You can link directly to a report: `.../analyze/?lat=31.1&lon=77.2&date=2023-07-10`. The ML nowcast and two-tier pages provide such links for any clicked cell."
+},
+{
+"t": "h3",
+"text": "3.3 \"Why does this cell have this result?\"",
+"id": "3-3-why-does-this-cell-have-this-result"
+},
+{
+"t": "p",
+"text": "This panel explains a result component by component."
+},
+{
+"t": "ul",
+"items": [
+"**Susceptibility.** The features that most raise and most lower the PIBE score of the cell, and the total contribution of each predictor group (terrain, rainfall climatology, soil, land cover, tectonics, lithology, process-based features and reporting effort). Contributions are exact TreeSHAP values on the log-odds scale, averaged over the three PIBE members. Feature values are shown in brackets.",
+"**Rainfall.** Event rainfall, duration and antecedent rainfall in words.",
+"**Threshold.** The SACT threshold and the chosen Tier 1 threshold in millimetres, the observed event rainfall and whether the threshold is exceeded.",
+"**ML.** The nowcast score and its percentile among all cells on that day.",
+"**Historical context.** How many monitored cell-days in 2007-2025 had similar event rainfall and duration, how many of them had a recorded landslide, and how often this rainfall cell reached comparable event rainfall in 1991-2025."
+]
+},
+{
+"t": "note",
+"text": "Important: feature contributions describe model behaviour and should not be interpreted as proof of physical causation. Correlated predictors can share or exchange contributions, and reporting covariates are held at national medians for every cell."
+},
+{
+"t": "h3",
+"text": "3.4 Susceptibility",
+"id": "3-4-susceptibility"
+},
+{
+"t": "p",
+"text": "The national susceptibility map."
+},
+{
+"t": "ul",
+"items": [
+"**Model**: PIBE (national map, default), PIBE, the plain GBM ensemble, frequency ratio, logistic regression, random forest, XGBoost, LightGBM, CatBoost, AHP, TRIGRS Monte Carlo, and the frozen pre-2013 PIBE used as S. Apart from the national PIBE map, the layers are spatial cross-validation out-of-fold scores, available for the 113,290 modelled cells.",
+"**Display**: area-share classes (Very low 60 %, Low 20 %, Moderate 10 %, High 5 %, Very high 5 % of area) or a continuous percentile rank.",
+"**Opacity**: blends the map with the basemap."
+]
+},
+{
+"t": "p",
+"text": "Click a cell to see its PIBE class and percentile, flat-terrain flag, whether it contains a recorded landslide, its scores under every model, its predictor values and the susceptibility part of the \"why\" panel. Susceptibility is a relative ranking, not a probability of failure."
+},
+{
+"t": "h3",
+"text": "3.5 Rainfall thresholds",
+"id": "3-5-rainfall-thresholds"
+},
+{
+"t": "p",
+"text": "Click a rainfall cell and choose a date. The page shows:"
+},
+{
+"t": "ul",
+"items": [
+"**Daily rainfall and event rainfall E** for the previous 90 days.",
+"**The event rainfall-duration (E-D) chart**, with all published thresholds (dashed), the recalibrated frequentist and MaCumBA-type thresholds and the SACT curve for the cell's A30, MAP and S. The black dot marks the selected cell-day when an event is ongoing.",
+"**A table of historical threshold exceedance**, with each threshold in millimetres and the margin above or below it.",
+"**The SACT equation**, its parameters and their 95 % intervals.",
+"**A what-if calculator**: enter E, D, A30, MAP and S to evaluate every threshold.",
+"**Event-only performance**: skill on all days versus rainfall-event days only."
+]
+},
+{
+"t": "p",
+"text": "Crossing a threshold means that rainfall conditions resemble those associated with past landslides. It does not mean a landslide will occur."
+},
+{
+"t": "h3",
+"text": "3.6 ML nowcast",
+"id": "3-6-ml-nowcast"
+},
+{
+"t": "p",
+"text": "Daily model scores for every IMD cell in the study domain."
+},
+{
+"t": "ul",
+"items": [
+"**Model**: PI-GBM (default), CatBoost, XGBoost, LightGBM, random forest or logistic regression.",
+"**Alert rule**: the 5 % alert budget (default), meaning a cut at the 95th percentile of calibration scores, or the TSS-optimal operating cut."
+]
+},
+{
+"t": "p",
+"text": "Dark cells are at or above the cut. The panel reports the cut, the number and share of alerted cells and score statistics. \"How this result was generated\" lists the model's predictors, training period, susceptibility input and a reproduction check against the study."
+},
+{
+"t": "h3",
+"text": "3.7 Two-tier map",
+"id": "3-7-two-tier-map"
+},
+{
+"t": "p",
+"text": "The two-tier map is an experimental research framework that combines the three products. For each rainfall cell and day:"
+},
+{
+"t": "table",
+"header": [
+"Category",
+"Logic"
+],
+"rows": [
+[
+"1",
+"Tier 1 threshold not exceeded."
+],
+[
+"2",
+"Tier 1 exceeded, but the ML score is below its operating cut."
+],
+[
+"3",
+"Tier 1 exceeded and the ML score is at or above its cut."
+],
+[
+"4",
+"As category 3, and the cell's PIBE susceptibility is High or Very high."
+]
+]
+},
+{
+"t": "p",
+"text": "Colours are deliberately neutral: the categories express higher or lower model-based priority, not danger or safety. This configuration has not been prospectively validated as an operational warning system."
+},
+{
+"t": "h3",
+"text": "3.8 Historical events",
+"id": "3-8-historical-events"
+},
+{
+"t": "p",
+"text": "Hindcasts of the 2018 Kerala monsoon (1 June to 31 August) and the 2023 Himachal Pradesh monsoon (15 June to 31 August), with the mapped landslides of each event shown as black dots."
+},
+{
+"t": "ul",
+"items": [
+"**Layer**: daily rainfall, PI-GBM score, SACT probability or frequentist E-D exceedance.",
+"**Play** or move the slider to step through the days, or jump to one of the three wettest days.",
+"**Metrics**: how well each method separated cells with mapped landslides from other cells."
+]
+},
+{
+"t": "p",
+"text": "Each hindcast is a single event. It demonstrates behaviour and does not estimate general skill."
+},
+{
+"t": "h3",
+"text": "3.9 Model comparison, leakage audit and sensitivity",
+"id": "3-9-model-comparison-leakage-audit-and-sensitivity"
+},
+{
+"t": "ul",
+"items": [
+"**Model comparison**: point estimates with 95 % block-bootstrap intervals for all susceptibility, threshold and nowcast methods, and skill on all days versus event days.",
+"**Leakage audit**: SACT and PI-GBM driven by an all-period susceptibility input versus the frozen pre-2013 input (Section 5.5).",
+"**Sensitivity**: SACT sensitivity to the no-rain gap, the aggregation of S, the antecedent window and its components; the SACT coefficient table; PIBE sensitivity to reporting covariates; and sensitivity to the background buffer."
+]
+},
+{
+"t": "h3",
+"text": "3.10 PIBE explainer, methods, data and about",
+"id": "3-10-pibe-explainer-methods-data-and-about"
+},
+{
+"t": "ul",
+"items": [
+"**PIBE explainer**: the construction of PIBE step by step, with its component ladder and transfer results.",
+"**Methods**: a compact summary of the methodology with a timeline of calibration and test periods.",
+"**Data & downloads**: harmonised inventory, GeoTIFF grids, predictions, validation tables and figures. The complete data deposit is archived on Zenodo: https://doi.org/10.5281/zenodo.23069045.",
+"**About**: publication, data sources, limitations and citation."
+]
+},
+{
+"t": "h2",
+"text": "4. Scientific background",
+"id": "4-scientific-background"
+},
+{
+"t": "h3",
+"text": "4.1 The landslide problem in India",
+"id": "4-1-the-landslide-problem-in-india"
+},
+{
+"t": "p",
+"text": "Landslides are among the most damaging natural hazards in India. The Himalayan arc, the hill ranges of northeast India and the Western Ghats combine steep, deeply weathered slopes, active tectonics and intense monsoon rainfall. The August 2018 monsoon triggered several thousand landslides in Kerala, and the extreme rainfall of July and August 2023 produced thousands of failures in Himachal Pradesh. Planning and warning need two complementary products: a map of where slopes are predisposed to fail (susceptibility) and a rule for when rainfall is likely to trigger failures (a rainfall threshold or nowcast)."
+},
+{
+"t": "h3",
+"text": "4.2 Landslide inventory",
+"id": "4-2-landslide-inventory"
+},
+{
+"t": "p",
+"text": "The raw inventory contains 9,642 records from 13 sources dated 1995-2026. Removing 15 records without coordinates (including all six dated 2026) and 19 co-located same-year duplicates left 9,608 harmonised records spanning 1995-2025. The two largest components are satellite-mapped polygon inventories of single events (Kerala 2018 and Himachal Pradesh 2023). The NASA Global Landslide Catalog (GLC) contributes dated, point-located events for 2007-2016."
+},
+{
+"t": "p",
+"text": "Two subsets were derived. The susceptibility subset keeps rainfall-type failures located within 5 km. The threshold subset keeps rainfall-triggered failures with an exact date and a location uncertainty of 25 km or less. The Kerala and Himachal inventories have only interval dates, so they enter susceptibility modelling and the event hindcasts but not threshold calibration."
+},
+{
+"t": "h3",
+"text": "4.3 Predictors",
+"id": "4-3-predictors"
+},
+{
+"t": "p",
+"text": "Thirty-six open predictors in six groups were computed on the 0.05° grid:"
+},
+{
+"t": "table",
+"header": [
+"Group",
+"Predictors",
+"Source"
+],
+"rows": [
+[
+"Terrain (10)",
+"elevation, relief, slope statistics, steep-slope fractions, curvature, northness, local relief",
+"Copernicus GLO-90 DEM (90 m)"
+],
+[
+"Rainfall climatology (8)",
+"mean annual precipitation, annual maxima, 25-year return levels, heavy-rain days, monsoon share, variability",
+"IMD 0.25° daily rainfall, 1991-2025"
+],
+[
+"Soil (6)",
+"sand, silt, clay, bulk density, organic carbon, coarse fragments",
+"SoilGrids 2.0"
+],
+[
+"Land cover (7)",
+"tree, shrub, grass, crop, built-up, bare, snow fractions",
+"ESA WorldCover 2021"
+],
+[
+"Tectonic (3)",
+"distance to active fault, earthquake density, distance to M ≥ 6 epicentres",
+"GEM faults, USGS ComCat"
+],
+[
+"Lithology (2)",
+"lithological group, stratigraphic age",
+"Generalized Geology of the World"
+]
+]
+},
+{
+"t": "p",
+"text": "Population (WorldPop 2020) is used only as a reporting-effort covariate and to estimate exposure."
+},
+{
+"t": "h3",
+"text": "4.4 Susceptibility modelling",
+"id": "4-4-susceptibility-modelling"
+},
+{
+"t": "p",
+"text": "**Positive-unlabelled framing.** A 0.05° cell is recorded-positive if it contains at least one landslide of the susceptibility subset. After removing 19 implausible positives on flat terrain, 765 recorded-positive cells remained. All other cells are unlabelled background: the absence of a record means only that no landslide was reported. Background cells adjacent to positives were excluded, leaving 113,290 modelled cells. The recorded-positive fraction is 0.68 %, which is also the no-skill level of average precision."
+},
+{
+"t": "p",
+"text": "**Models compared.** The analytic hierarchy process (AHP; expert weights, consistency ratio 0.012), frequency ratio (FR), a Monte Carlo implementation of the TRIGRS physically based model, logistic regression, random forest, XGBoost, LightGBM and CatBoost. All models received the same predictors, fixed hyperparameters and the same five spatial folds of 1° × 1° blocks."
+},
+{
+"t": "p",
+"text": "**Results.** The tree ensembles showed the highest discrimination (AUC 0.975 to 0.979, average precision about 0.6), with broadly overlapping intervals. FR reached AUC 0.946, TRIGRS 0.862 and AHP 0.822. Leave-one-region-out tests reordered the methods: no model transferred best to every withheld region, and FR transferred best to the Western Ghats."
+},
+{
+"t": "h3",
+"text": "4.5 PIBE: process-informed, observation-bias-adjusted ensemble",
+"id": "4-5-pibe-process-informed-observation-bias-adjusted-ensemble"
+},
+{
+"t": "p",
+"text": "PIBE averages XGBoost, LightGBM and CatBoost and adds four components:"
+},
+{
+"t": "ul",
+"items": [
+"**V1, process-based features**: the TRIGRS failure probability and the AHP index enter as predictors. \"Process-informed\" means only that these outputs are features; PIBE does not solve physical equations.",
+"**V2, source weights**: large event inventories are down-weighted so that no single source dominates.",
+"**V3, monotone constraints**: susceptibility cannot decrease with slope, relief, rainfall extremes or the process-based features.",
+"**V4, observation-bias adjustment**: built-up fraction and population density describe reporting effort. They are used in training and fixed at national medians for prediction."
+]
+},
+{
+"t": "p",
+"text": "An observed inventory mixes physical susceptibility, triggering and reporting effort. PIBE reduces the influence of heterogeneous reporting effort; it does not remove bias. It is deliberately not the most accurate model against catalogue labels (AUC 0.955, average precision 0.484). In exchange, no flat-terrain cells appear in its top 10 % of area, and its ranking stays highly correlated across alternative treatments of reporting effort (Spearman ρ ≥ 0.96). About 37 million people live in its High and Very high classes."
+},
+{
+"t": "h3",
+"text": "4.6 Rainfall events",
+"id": "4-6-rainfall-events"
+},
+{
+"t": "p",
+"text": "For each IMD 0.25° cell and day, SLATE reconstructs the ongoing rainfall event exactly as in the study. A wet day has at least 1 mm of rain. An event starts on a wet day and ends after G consecutive dry days (G = 2; G = 1 for the MaCumBA-type threshold). E is the rainfall from the event start to the day, D the number of days since the start, and A30 the rainfall in the 30 days before the start. Rainfall events defined on daily data merge into monsoon episodes lasting weeks, which is the main reason daily thresholds lose discrimination."
+},
+{
+"t": "h3",
+"text": "4.7 Rainfall thresholds",
+"id": "4-7-rainfall-thresholds"
+},
+{
+"t": "ul",
+"items": [
+"**Published thresholds.** Five intensity-duration thresholds, applied unchanged: Caine (1980) and Guzzetti et al. (2008) (global), Dahal and Hasegawa (2008) (Nepal Himalaya), and Kanungo and Sharma (2014) and Mathew et al. (2014) (Garhwal).",
+"**Frequentist E-D threshold.** Fitted to the 2007-2012 triggering conditions at 5 % exceedance: E = 2.50 D^1.15 (E in mm, D in days). An exponent above 1 means that the critical mean daily intensity rises slightly with duration, the opposite of thresholds derived from hourly rainfall.",
+"**MaCumBA-type threshold.** An intensity-duration threshold whose no-rain gap and intercept maximise calibration TSS; the optimisation selected a one-day gap.",
+"**Daily TRIGRS.** The physically based factor of safety computed every day."
+]
+},
+{
+"t": "h3",
+"text": "4.8 SACT: an event-conditional threshold",
+"id": "4-8-sact-an-event-conditional-threshold"
+},
+{
+"t": "p",
+"text": "SACT asks whether conditioning a threshold on antecedent rainfall, climate and susceptibility adds skill. It is **event-conditional**: it applies only to cell-days within an ongoing rainfall event and is zero otherwise. A logistic model was fitted on 2007-2012 event days:"
+},
+{
+"t": "eq",
+"text": "logit p = b0 + bE ln(E/E0) + bD ln(D/D0) + bA ln(1 + A30/A0) + bMAP ln(MAP/M0) + bS S"
+},
+{
+"t": "p",
+"text": "with E0 = 1 mm, D0 = 1 day, A0 = 100 mm and M0 = 1,000 mm. Setting p to the TSS-optimal probability p* and solving for E gives a closed-form threshold:"
+},
+{
+"t": "eq",
+"text": "E*/E0 = α (D/D0)^βD (1 + A30/A0)^γA (MAP/M0)^δM exp(εS S)"
+},
+{
+"t": "p",
+"text": "Key facts:"
+},
+{
+"t": "ul",
+"items": [
+"Antecedent rainfall has a statistically supported effect (bA = 0.437, 95 % interval 0.126 to 0.594).",
+"The susceptibility coefficient is not distinguishable from zero (bS = −3.82, interval −3.96 to 4.30), so the S exponent has no stable physical interpretation.",
+"The model is approximately calibrated, but its Brier score equals that of climatology.",
+"In the component ablation, E and D alone reach TSS 0.598, better than the full SACT (0.580)."
+]
+},
+{
+"t": "p",
+"text": "SACT is therefore a leakage-controlled test of susceptibility conditioning, not a superior operational threshold."
+},
+{
+"t": "h3",
+"text": "4.9 Machine-learning nowcasts",
+"id": "4-9-machine-learning-nowcasts"
+},
+{
+"t": "p",
+"text": "Logistic regression, random forest, XGBoost, LightGBM and CatBoost were trained on 22 daily predictors: rainfall on the day and the previous day, totals over 3 to 60 days, the 3-day maximum, E, D, A30, seasonality, MAP, 25-year return levels, rainfall normalised by those levels, representative slope, sand, clay and S. PI-GBM averages XGBoost, LightGBM and CatBoost and adds the daily TRIGRS factor of safety. Negatives were undersampled 20:1 during training, so outputs are model scores, not calibrated probabilities. Operating cuts come from year-grouped out-of-fold predictions in the calibration period."
+},
+{
+"t": "h3",
+"text": "4.10 Validation design",
+"id": "4-10-validation-design"
+},
+{
+"t": "p",
+"text": "All threshold and nowcast methods were calibrated on 2007-2012 and evaluated on a temporal holdout from 2013 to 2025 (487,974 monitored cell-days, 377 landslide days). The main dated catalogue component, the NASA GLC, ends in 2016, so 376 of the 377 test landslide days fall in 2013-2016. Intervals come from block bootstraps of whole cell time series. The Kerala 2018 and Himachal Pradesh 2023 inventories were never used in calibration and provide independent event hindcasts."
+},
+{
+"t": "h2",
+"text": "5. Key results and how to read them",
+"id": "5-key-results-and-how-to-read-them"
+},
+{
+"t": "h3",
+"text": "5.1 Thresholds",
+"id": "5-1-thresholds"
+},
+{
+"t": "p",
+"text": "The recalibrated frequentist E-D and MaCumBA-type thresholds and SACT reached similar skill (TSS 0.54 to 0.58), whereas published thresholds varied widely: Caine (1980) detected only 14 % of landslide days, while other published curves kept a quarter of all cell-days on alert."
+},
+{
+"t": "h3",
+"text": "5.2 Event-only evaluation",
+"id": "5-2-event-only-evaluation"
+},
+{
+"t": "p",
+"text": "26 of the 377 test landslide days fell outside a rainfall event, where event-based thresholds cannot alert. When only event days are scored, TSS falls from 0.542 to 0.123 for the frequentist threshold and from 0.580 to 0.263 for SACT. Much of the apparent skill of daily thresholds therefore comes from separating rainy periods from dry ones. The ML nowcasts retain more discrimination within events (PI-GBM TSS 0.392, AUC 0.811)."
+},
+{
+"t": "h3",
+"text": "5.3 ML nowcasts",
+"id": "5-3-ml-nowcasts"
+},
+{
+"t": "p",
+"text": "At the fixed 5 % alert budget, PI-GBM detected 45.4 % of landslide days against 31.3 % for the best threshold, an increase of about 45 %. The boosting models differ within their uncertainty: PI-GBM has the highest TSS point estimate (0.618) and ties XGBoost for AUC (0.889), while CatBoost has the highest detection at the 5 % budget (0.480)."
+},
+{
+"t": "h3",
+"text": "5.4 Event hindcasts",
+"id": "5-4-event-hindcasts"
+},
+{
+"t": "p",
+"text": "In Kerala 2018, rainfall was extreme almost everywhere at the 0.25° scale, and no method separated affected from unaffected cells (frequentist AUC 0.624, PI-GBM 0.580, SACT 0.296). Under spatially uniform extreme rainfall, discrimination cannot come from rainfall intensity alone. In Himachal Pradesh 2023, PI-GBM concentrated alerts on affected cells (AUC 0.933)."
+},
+{
+"t": "h3",
+"text": "5.5 The leakage audit",
+"id": "5-5-the-leakage-audit"
+},
+{
+"t": "p",
+"text": "A susceptibility model trained with later landslides can leak information about the test period into a threshold that uses it. SLATE therefore uses S from a PIBE retrained only on records dated 2012 or earlier (171 cells). That model ranked the 506 cells first recorded from 2013 onwards with AUC 0.881, so it carries genuine information about later landslides. With an all-period S, SACT appeared markedly better (test TSS 0.599, detection at 5 % budget 0.337, Kerala AUC 0.911). With the frozen S these advantages disappeared (0.580, 0.164, 0.296), whereas PI-GBM changed little. Spatial cross-validation alone had not prevented the leakage."
+},
+{
+"t": "p",
+"text": "Label leakage controlled is not the same as a full historical hindcast: several predictor layers (for example WorldCover 2021 and WorldPop 2020) describe current rather than 2012 conditions."
+},
+{
+"t": "h2",
+"text": "6. Limitations",
+"id": "6-limitations"
+},
+{
+"t": "ul",
+"items": [
+"**Inventory.** The dated catalogue is dominated by 2013-2016, catalogue locations are uncertain by up to 25 km, and the background contains unreported landslides, so all scores refer to recorded events.",
+"**Resolution.** Daily 0.25° rainfall misses sub-daily bursts and orographic detail, and each rainfall cell is represented by one susceptibility value.",
+"**Physical parameters.** TRIGRS parameters are assumed rather than measured, and lithology comes from a small-scale global map.",
+"**Hindcasts.** Each hindcast concerns a single event.",
+"**Operational use.** The two-tier configuration has not been prospectively validated, and SLATE is not connected to live rainfall."
+]
+},
+{
+"t": "h2",
+"text": "7. Reproducibility and citation",
+"id": "7-reproducibility-and-citation"
+},
+{
+"t": "p",
+"text": "The source code, data export and verification scripts are available at https://github.com/slateindia/slateindia.github.io. The analysis data package, including the harmonised inventory, predictor table, folds, predictions, grids and scripts, is archived on Zenodo."
+},
+{
+"t": "p",
+"text": "Please cite SLATE as: Tiwari K (2026) SLATE: Slope Landslide Analytics and Triggering Explorer, version 1.0.0. Zenodo. https://doi.org/10.5281/zenodo.23068753"
+},
+{
+"t": "p",
+"text": "Contact: Kishan Tiwari, kishantiwari@iitkgp.ac.in"
+}
+],
+"pdf": "SLATE_User_Manual.pdf"
+}

@@ -1,0 +1,21 @@
+/data/
+ml_build.log
+__pycache__/
+.pytest_cache/
+frontend/node_modules/
+frontend/.next/
+scripts/_build/
+scripts/_reference.json
+frontend/out/
+catboost_info/
+
+# local development only (not published)
+IMPLEMENTATION_PLAN.md
+DEVELOPER_NOTES.md
+backend/
+docker/
+docker-compose.yml
+scripts/
+docs/API.md
+docs/DATA_DICTIONARY.md
+frontend/tsconfig.tsbuildinfo

@@ -1,0 +1,1 @@
+{"id":"ahp","label":"AHP","column":"score_AHP","n_cells":113290,"kind":"spatial cross-validation out-of-fold score (modelled cells only)","cv_metrics":{"AUC":0.8217379899601106,"AUC_lo":0.7942892889692781,"AUC_hi":0.8583377268157765,"AP":0.018922996104344,"AP_lo":0.0129608200281061,"AP_hi":0.0278787382435591}}
