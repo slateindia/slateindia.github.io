@@ -6,6 +6,7 @@ export const metadata = {
   title: "SLATE: Slope Landslide Analytics and Triggering Explorer",
   description: "Interactive research platform for landslide susceptibility and rainfall-triggering analysis.",
   authors: [{ name: "Kishan Tiwari" }],
+  verification: { google: "4tSiS-_olt6XqO-Ed0cOUpcrZopIZIllhEWh8YmZJb8" },
 };
 
 const NAV: [string, string][] = [
